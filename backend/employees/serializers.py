@@ -10,5 +10,10 @@ class EmployeeSerializer(serializers.Serializer):
     def to_representation(self, instance):
         return {
             'id': str(instance['_id']),
+            'name': instance['name'],
+            'email': instance['email'],
+            'role': instance['role'],
+            'department': instance['department'],
+            'salary': instance['salary']
         }
     
