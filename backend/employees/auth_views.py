@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .db import users_collection
-from .auth_serializers import UserSerializer
+from .auth_serializers import UserSerializer,LoginSerializer
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -27,7 +27,7 @@ def register(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         user_data = serializer.validated_data
         user = users_collection.find_one({'username': user_data['username']})

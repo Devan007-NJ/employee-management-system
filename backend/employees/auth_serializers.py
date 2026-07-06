@@ -10,4 +10,7 @@ class UserSerializer(serializers.Serializer):
         instance['_id'] = str(instance['_id'])
         instance.pop('password', None)  # Remove password from the representation
         return instance
-    
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=100)
+    password = serializers.CharField(write_only=True)

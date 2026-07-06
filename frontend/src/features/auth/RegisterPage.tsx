@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import type { SyntheticEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { registerUser } from '../../api/authapi';
+import { useNavigate, Link } from 'react-router-dom';   // removed `data`
+import { registerUser, loginUser } from '../../api/authapi';
+import { setCredentials } from './authSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -12,6 +14,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +23,16 @@ export default function RegisterPage() {
 
     try {
       await registerUser({ username, email, password, role });
-      navigate('/login');
+
+      const data = await loginUser({ username, password });   // ✅ actually call loginUser
+      dispatch(
+        setCredentials({
+          user: data.user,
+          access: data.access,
+          refresh: data.refresh,
+        })
+      );
+      navigate('/employees');
     } catch {
       setError('Registration failed. Try a different username/email.');
     } finally {

@@ -7,12 +7,17 @@ const api = axios.create({
   },
 });
 
+const PUBLIC_ENDPOINTS = ['/register/', '/login/'];
+
 //SimpleJWT Token Authentication
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("access_token");
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+        const isPublic = PUBLIC_ENDPOINTS.some((endpoint) => config.url?.includes(endpoint));
+        if (!isPublic) {
+            const token = localStorage.getItem("access_token");
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
         }
         return config;
     },

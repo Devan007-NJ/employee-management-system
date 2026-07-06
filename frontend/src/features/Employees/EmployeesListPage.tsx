@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { useEmployees, useDeleteEmployee } from './useEmployeeQueries';
+import  Navbar  from '../Components/sidebar';
 
 export default function EmployeeListPage() {
   const { user } = useAppSelector((state) => state.auth);
@@ -25,6 +26,7 @@ export default function EmployeeListPage() {
 
   return (
     <div className="min-h-screen bg-base p-8">
+      <Navbar />
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-mauve">
           {isAdmin ? 'All Employees' : 'My Record'}

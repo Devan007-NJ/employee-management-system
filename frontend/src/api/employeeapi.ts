@@ -19,7 +19,7 @@ export const getEmployeeById = async (id: string): Promise<Employee> => {
 };
 //POST OPERATION
 export const createEmployee = async (payload : Omit<Employee, '_id'>) : Promise<Employee> => {
-    let response = await api.post<Employee>('/create/', payload);
+    let response = await api.post<Employee>('/list/', payload);
     return response.data;
 }
 //PUT OPERATION
